@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace Notes
 {
     // Structure containing category name and list of notes within the category
-    struct NoteCategory
+    public struct NoteCategory
     {
         public string categoryName;
         public List<NoteItem> notes;
@@ -24,7 +25,7 @@ namespace Notes
     };
 
     // Structure that contains note name and its' content
-    struct NoteItem
+    public struct NoteItem
     {
         public string noteName;
         public string noteText;
@@ -47,7 +48,7 @@ namespace Notes
         List<NoteCategory> Categories = new List<NoteCategory>();
         int CurrentCategory = -1;
         int CurrentNote = -1;
-
+        
         /*
          * Methods
         */
@@ -144,7 +145,8 @@ namespace Notes
         
         private void SaveNotes()
         {
-
+            string json_strings = JsonConvert.SerializeObject(Categories);
+            Sql.InsertNotesData(Categories);
         }
 
         /*
@@ -176,6 +178,7 @@ namespace Notes
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveNotes();
+            Sql.CloseConnection();
         }
 
         // When categories list is clicked
@@ -234,6 +237,12 @@ namespace Notes
             if (SubjectIdx == -1) return;
 
             textEditor.Text = Categories[CurrentCategory].notes[SubjectIdx].noteText;
+        }
+
+        // Window load
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            Sql.Connect();
         }
     }
 }
