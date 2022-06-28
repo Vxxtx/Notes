@@ -15,9 +15,10 @@ namespace Notes
         /*
          * connects to notes.db and checks if table exists. If not, then creates it.
         */
-        public static SQLiteConnection Connect()
+        public static List<NoteCategory> ConnectAndLoad()
         {
-            
+            List<NoteCategory> Categories = new List<NoteCategory>();
+
             try
             {
                 con.Open();
@@ -31,7 +32,21 @@ namespace Notes
             SQLiteCommand cmd = con.CreateCommand();
             cmd.CommandText = "CREATE TABLE IF NOT EXISTS Categories (Category TEXT, Notes TEXT, PRIMARY KEY (Category))";
             cmd.ExecuteNonQuery();
-            return con;
+
+            SQLiteCommand cmd_fetch = con.CreateCommand();
+            cmd_fetch.CommandText = "SELECT * FROM Categories";
+            cmd_fetch.CommandType = System.Data.CommandType.Text;
+
+            SQLiteDataReader reader = cmd_fetch.ExecuteReader();
+
+            while (reader.Read())
+            {
+                NoteCategory newCat = new NoteCategory(Convert.ToString(reader["Category"]), JsonConvert.DeserializeObject<List<NoteItem>>(Convert.ToString(reader["Notes"])));
+                Categories.Add(newCat);
+            }
+
+            con.Close();
+            return Categories;
         }
 
         public static void InsertNotesData(List<NoteCategory> data)
@@ -39,8 +54,7 @@ namespace Notes
             for (int i = 0; i < data.Count; i++)
             {
                 SQLiteCommand cmd = con.CreateCommand();
-                cmd.CommandText = "INSERT INTO Categories (Category, Notes) VALUES (@cat, @note)";
-               // cmd.CommandText = "INSERT OR REPLACE INTO Categories (Category, Notes) VALUES (select Category FROM Categories WHERE Category = @cat)";
+                cmd.CommandText = "INSERT INTO Categories (Category, Notes) VALUES (@cat, @note) ON CONFLICT (Category) DO UPDATE SET Notes = @note";
                 cmd.CommandType = System.Data.CommandType.Text;
 
                 cmd.Parameters.Add(new SQLiteParameter("@cat", data[i].categoryName));

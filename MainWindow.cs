@@ -145,7 +145,7 @@ namespace Notes
         
         private void SaveNotes()
         {
-            string json_strings = JsonConvert.SerializeObject(Categories);
+            SaveCurrentSubject();
             Sql.InsertNotesData(Categories);
         }
 
@@ -242,7 +242,16 @@ namespace Notes
         // Window load
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            Sql.Connect();
+            Categories = Sql.ConnectAndLoad();
+
+            if (Categories.Count > 0)
+            {
+                for (int i = 0; i < Categories.Count; i++)
+                {
+                    ListViewItem newItem = new ListViewItem(Categories[i].categoryName);
+                    categoriesList.Items.Add(newItem);
+                }
+            }
         }
     }
 }
