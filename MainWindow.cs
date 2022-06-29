@@ -188,6 +188,8 @@ namespace Notes
             {
                 CurrentCategory = -1;
                 CurrentNote = -1;
+                textEditor.ReadOnly = true;
+                textEditor.BackColor = Color.Gray;
                 return;
             }
             
@@ -222,7 +224,8 @@ namespace Notes
             if (notesList.SelectedItems.Count == 0)
             {
                 CurrentNote = -1;
-
+                textEditor.ReadOnly = true;
+                textEditor.BackColor = Color.Gray;
                 return;
             }
 
@@ -232,6 +235,8 @@ namespace Notes
             if (NoteIdx == -1) return;
 
             textEditor.Text = Categories[CurrentCategory].notes[NoteIdx].noteText;
+            textEditor.ReadOnly = false;
+            textEditor.BackColor = Color.White;
         }
 
         // Window load

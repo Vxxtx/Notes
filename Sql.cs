@@ -13,7 +13,7 @@ namespace Notes
         static SQLiteConnection con = new SQLiteConnection("Data Source=notes.db");
 
         /*
-         * connects to notes.db and checks if table exists. If not, then creates it.
+         * connects to notes.db and checks if table exists. If not, then creates it. Also loads data
         */
         public static List<NoteCategory> ConnectAndLoad()
         {
@@ -53,6 +53,7 @@ namespace Notes
         {
             con.Open();
 
+            // Empties table to be sure if data count is 0
             if (data.Count == 0)
             {
                 SQLiteCommand cmd = con.CreateCommand();
@@ -63,6 +64,7 @@ namespace Notes
                 return;
             }
 
+            // Get data, convert to json and insert
             for (int i = 0; i < data.Count; i++)
             {
                 SQLiteCommand cmd = con.CreateCommand();

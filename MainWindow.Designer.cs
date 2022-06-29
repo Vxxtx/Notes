@@ -111,8 +111,10 @@
             // 
             // textEditor
             // 
+            this.textEditor.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.textEditor.Location = new System.Drawing.Point(184, 12);
             this.textEditor.Name = "textEditor";
+            this.textEditor.ReadOnly = true;
             this.textEditor.Size = new System.Drawing.Size(604, 426);
             this.textEditor.TabIndex = 5;
             this.textEditor.Text = "";
