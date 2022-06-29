@@ -58,7 +58,7 @@ namespace Notes
         */
         private void AddCategory(string categoryName)
         {
-            SaveCurrentSubject();
+            SaveCurrentNote();
 
             categoryAddBox.Text = "";
 
@@ -74,9 +74,9 @@ namespace Notes
         
         private void SelectCategory(string categoryName)
         {
-            foreach (ListViewItem item in subjectList.Items)
+            foreach (ListViewItem item in notesList.Items)
             {
-                subjectList.Items.Remove(item);
+                notesList.Items.Remove(item);
             }
 
             int FoundCat = FindCategory(categoryName);
@@ -86,7 +86,7 @@ namespace Notes
 
             foreach (NoteItem note in Categories[FoundCat].notes)
             {
-                subjectList.Items.Add(new ListViewItem(note.noteName));
+                notesList.Items.Add(new ListViewItem(note.noteName));
             }
         }
 
@@ -103,30 +103,25 @@ namespace Notes
         }
 
         /*
-         * Subjects
+         * Notes
         */
-        private void AddSubject(string subjectName)
+        private void AddNote(string noteName)
         {
             if (CurrentCategory == -1) return;
 
-            SaveCurrentSubject();
+            SaveCurrentNote();
 
-            subjectAddBox.Text = "";
+            noteAddBox.Text = "";
             textEditor.Text = "";
-            Categories[CurrentCategory].notes.Add(new NoteItem(subjectName, ""));
-            subjectList.Items.Add(new ListViewItem(subjectName));
+            Categories[CurrentCategory].notes.Add(new NoteItem(noteName, ""));
+            notesList.Items.Add(new ListViewItem(noteName));
         }
 
-        private void SelectSubject(string subjectName)
-        {
-
-        }
-
-        private int FindSubject(string subjectName)
+        private int FindNote(string noteName)
         {
             for (int i = 0; i < Categories[CurrentCategory].notes.Count; i++)
             {
-                if (Categories[CurrentCategory].notes[i].noteName == subjectName)
+                if (Categories[CurrentCategory].notes[i].noteName == noteName)
                 {
                     return i;
                 }
@@ -134,7 +129,7 @@ namespace Notes
             return -1;
         }
         
-        private void SaveCurrentSubject()
+        private void SaveCurrentNote()
         {
             if (CurrentNote != -1)
             {
@@ -145,7 +140,7 @@ namespace Notes
         
         private void SaveNotes()
         {
-            SaveCurrentSubject();
+            SaveCurrentNote();
             Sql.InsertNotesData(Categories);
         }
 
@@ -153,7 +148,7 @@ namespace Notes
          * Events
         */
 
-        // Get subject list enter press
+        // Get category list enter press
         private void categoryAddBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
@@ -170,9 +165,9 @@ namespace Notes
             categoryAddBox.Text = "";
         }
 
-        private void subjectAddBox_MouseClick(object sender, MouseEventArgs e)
+        private void noteAddBox_MouseClick(object sender, MouseEventArgs e)
         {
-            subjectAddBox.Text = "";
+            noteAddBox.Text = "";
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
@@ -184,9 +179,9 @@ namespace Notes
         // When categories list is clicked
         private void categoriesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in subjectList.Items)
+            foreach (ListViewItem item in notesList.Items)
             {
-                subjectList.Items.Remove(item);
+                notesList.Items.Remove(item);
             }
 
             if (categoriesList.SelectedItems.Count == 0)
@@ -202,41 +197,41 @@ namespace Notes
 
             foreach (NoteItem note in Categories[CategoryIdx].notes)
             {
-                subjectList.Items.Add(new ListViewItem(note.noteName));
+                notesList.Items.Add(new ListViewItem(note.noteName));
             }
         }
 
-        // Get subject list enter press
-        private void subjectAddBox_KeyPress(object sender, KeyPressEventArgs e)
+        // Get note list enter press
+        private void noteAddBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
-                if (subjectAddBox.Text != "")
+                if (noteAddBox.Text != "")
                 {
-                    AddSubject(subjectAddBox.Text);
+                    AddNote(noteAddBox.Text);
                 }
             }
         }
 
-        // When subject list is clicked
-        private void subjectList_SelectedIndexChanged(object sender, EventArgs e)
+        // When note list is clicked
+        private void notesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SaveCurrentSubject();
+            SaveCurrentNote();
             textEditor.Text = "";
 
-            if (subjectList.SelectedItems.Count == 0)
+            if (notesList.SelectedItems.Count == 0)
             {
                 CurrentNote = -1;
 
                 return;
             }
 
-            int SubjectIdx = FindSubject(subjectList.SelectedItems[0].Text);
-            CurrentNote = SubjectIdx;
+            int NoteIdx = FindNote(notesList.SelectedItems[0].Text);
+            CurrentNote = NoteIdx;
 
-            if (SubjectIdx == -1) return;
+            if (NoteIdx == -1) return;
 
-            textEditor.Text = Categories[CurrentCategory].notes[SubjectIdx].noteText;
+            textEditor.Text = Categories[CurrentCategory].notes[NoteIdx].noteText;
         }
 
         // Window load
@@ -272,19 +267,19 @@ namespace Notes
             }
         }
 
-        private void subjectList_KeyDown(object sender, KeyEventArgs e)
+        private void notesList_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Delete || e.KeyData == Keys.Back)
             {
-                if (categoriesList.SelectedItems.Count > 0 && subjectList.SelectedItems.Count > 0)
+                if (categoriesList.SelectedItems.Count > 0 && notesList.SelectedItems.Count > 0)
                 {
                     DialogResult yesNoResult = MessageBox.Show("Are you sure? This action will delete the note.", "Delete", MessageBoxButtons.YesNo);
 
                     if (yesNoResult == DialogResult.Yes)
                     {
                         CurrentNote = -1;
-                        Categories[CurrentCategory].notes.RemoveAt(FindSubject(subjectList.SelectedItems[0].Text));
-                        subjectList.Items.Remove(subjectList.SelectedItems[0]);
+                        Categories[CurrentCategory].notes.RemoveAt(FindNote(notesList.SelectedItems[0].Text));
+                        notesList.Items.Remove(notesList.SelectedItems[0]);
                     }
                 }
             }
