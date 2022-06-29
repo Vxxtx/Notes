@@ -63,6 +63,7 @@
             this.categoriesList.UseCompatibleStateImageBehavior = false;
             this.categoriesList.View = System.Windows.Forms.View.Details;
             this.categoriesList.SelectedIndexChanged += new System.EventHandler(this.categoriesList_SelectedIndexChanged);
+            this.categoriesList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.categoriesList_KeyDown);
             // 
             // columnHeader1
             // 
@@ -83,6 +84,7 @@
             this.subjectList.UseCompatibleStateImageBehavior = false;
             this.subjectList.View = System.Windows.Forms.View.Details;
             this.subjectList.SelectedIndexChanged += new System.EventHandler(this.subjectList_SelectedIndexChanged);
+            this.subjectList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.subjectList_KeyDown);
             // 
             // columnHeader2
             // 

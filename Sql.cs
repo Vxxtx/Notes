@@ -51,6 +51,18 @@ namespace Notes
 
         public static void InsertNotesData(List<NoteCategory> data)
         {
+            con.Open();
+
+            if (data.Count == 0)
+            {
+                SQLiteCommand cmd = con.CreateCommand();
+                cmd.CommandText = "DELETE FROM Categories";
+                cmd.ExecuteNonQuery();
+
+                con.Close();
+                return;
+            }
+
             for (int i = 0; i < data.Count; i++)
             {
                 SQLiteCommand cmd = con.CreateCommand();
@@ -62,6 +74,7 @@ namespace Notes
 
                 cmd.ExecuteNonQuery();
             }
+            con.Close();
         }
 
         public static void CloseConnection()

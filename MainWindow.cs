@@ -253,5 +253,41 @@ namespace Notes
                 }
             }
         }
+
+        private void categoriesList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Delete || e.KeyData == Keys.Back)
+            {
+                if (categoriesList.SelectedItems.Count > 0)
+                {
+                    DialogResult yesNoResult = MessageBox.Show("Are you sure? This action will delete the category.", "Delete", MessageBoxButtons.YesNo);
+                    
+                    if (yesNoResult == DialogResult.Yes)
+                    {
+                        CurrentCategory = -1;
+                        Categories.RemoveAt(FindCategory(categoriesList.SelectedItems[0].Text));
+                        categoriesList.Items.Remove(categoriesList.SelectedItems[0]);
+                    }
+                }
+            }
+        }
+
+        private void subjectList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Delete || e.KeyData == Keys.Back)
+            {
+                if (categoriesList.SelectedItems.Count > 0 && subjectList.SelectedItems.Count > 0)
+                {
+                    DialogResult yesNoResult = MessageBox.Show("Are you sure? This action will delete the note.", "Delete", MessageBoxButtons.YesNo);
+
+                    if (yesNoResult == DialogResult.Yes)
+                    {
+                        CurrentNote = -1;
+                        Categories[CurrentCategory].notes.RemoveAt(FindSubject(subjectList.SelectedItems[0].Text));
+                        subjectList.Items.Remove(subjectList.SelectedItems[0]);
+                    }
+                }
+            }
+        }
     }
 }
