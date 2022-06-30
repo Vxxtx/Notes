@@ -42,9 +42,14 @@ namespace Notes
         public MainWindow()
         {
             InitializeComponent();
+
+            Global.mainWindow = this;
         }
 
         // Initialize variables
+
+        public SettingsWindow settingsWindow;
+
         List<NoteCategory> Categories = new List<NoteCategory>();
         int CurrentCategory = -1;
         int CurrentNote = -1;
@@ -287,6 +292,19 @@ namespace Notes
                         notesList.Items.Remove(notesList.SelectedItems[0]);
                     }
                 }
+            }
+        }
+
+        private void settingsButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                settingsWindow.Show();
+            }
+            catch 
+            {
+                settingsWindow = new SettingsWindow(this);
+                settingsWindow.Show();
             }
         }
     }

@@ -37,6 +37,7 @@
             this.currentNoteLabel = new System.Windows.Forms.Label();
             this.textEditor = new System.Windows.Forms.RichTextBox();
             this.noteAddBox = new System.Windows.Forms.TextBox();
+            this.settingsButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // categoryAddBox
@@ -115,7 +116,7 @@
             this.textEditor.Location = new System.Drawing.Point(184, 12);
             this.textEditor.Name = "textEditor";
             this.textEditor.ReadOnly = true;
-            this.textEditor.Size = new System.Drawing.Size(604, 426);
+            this.textEditor.Size = new System.Drawing.Size(604, 456);
             this.textEditor.TabIndex = 5;
             this.textEditor.Text = "";
             // 
@@ -129,11 +130,22 @@
             this.noteAddBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.noteAddBox_MouseClick);
             this.noteAddBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.noteAddBox_KeyPress);
             // 
+            // settingsButton
+            // 
+            this.settingsButton.Location = new System.Drawing.Point(12, 445);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(166, 23);
+            this.settingsButton.TabIndex = 7;
+            this.settingsButton.Text = "Settings";
+            this.settingsButton.UseVisualStyleBackColor = true;
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 475);
+            this.Controls.Add(this.settingsButton);
             this.Controls.Add(this.noteAddBox);
             this.Controls.Add(this.textEditor);
             this.Controls.Add(this.currentNoteLabel);
@@ -142,6 +154,7 @@
             this.Controls.Add(this.categoriesList);
             this.Controls.Add(this.categoryAddBox);
             this.Name = "MainWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Notes";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
@@ -161,6 +174,7 @@
         private System.Windows.Forms.RichTextBox textEditor;
         private System.Windows.Forms.TextBox noteAddBox;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.Button settingsButton;
     }
 }
 
