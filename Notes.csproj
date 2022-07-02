@@ -68,29 +68,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Global.cs" />
-    <Compile Include="MainWindow.cs">
+    <Compile Include="Other\Global.cs" />
+    <Compile Include="Windows\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainWindow.Designer.cs">
+    <Compile Include="Windows\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerWindow.cs">
+    <Compile Include="Windows\ServerWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServerWindow.Designer.cs">
+    <Compile Include="Windows\ServerWindow.Designer.cs">
       <DependentUpon>ServerWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="SettingsWindow.cs">
+    <Compile Include="Windows\SettingsWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsWindow.Designer.cs">
+    <Compile Include="Windows\SettingsWindow.Designer.cs">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sql.cs" />
-    <EmbeddedResource Include="MainWindow.resx">
+    <Compile Include="Other\Sql.cs" />
+    <EmbeddedResource Include="Windows\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -102,13 +102,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ServerWindow.resx">
+    <EmbeddedResource Include="Windows\ServerWindow.resx">
       <DependentUpon>ServerWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsWindow.aa-DJ.resx">
+    <EmbeddedResource Include="Windows\SettingsWindow.aa-DJ.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsWindow.resx">
+    <EmbeddedResource Include="Windows\SettingsWindow.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
